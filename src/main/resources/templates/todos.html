@@ -1,0 +1,17 @@
+<html>
+<head>
+    <script src="https://unpkg.com/htmx.org@1.9.3"></script>
+</head>
+<body>
+<div th:fragment="todo-list" class="todo-list">
+    <div th:each="todo: ${todos}" class="todo">
+        <span th:text="${todo.title}"></span>
+        <button th:attr="hx-delete=@{/todos/{id}(id=${todo.id})}" hx-swap="outerHTML" hx-target="closest .todo">Delete</button>
+    </div>
+</div>
+<div th:fragment="todos-form" hx-swap-oob="true" id="todos-form">
+    <input type="text" name="new-todo" id="new-todo">
+    <button hx-post="/todos" hx-include="#new-todo" hx-target=".todo-list">Add</button>
+</div>
+</body>
+</html>
